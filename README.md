@@ -22,6 +22,12 @@ This should be pretty straight forward, but I included an example that dumps all
 
 ---
 
+# Test usage
+
+`DEBUG=* && npm i --dev && npm test`
+
+---
+
 # API Documentation
 
 ## Table of Contents

@@ -1,6 +1,6 @@
 {
   "name": "aftonbladet-links",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Scrapes all article links from the swedish newspaper Aftonbladet, from their sitemap!",
   "main": "index.js",
   "scripts": {
