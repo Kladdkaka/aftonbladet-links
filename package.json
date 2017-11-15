@@ -1,0 +1,19 @@
+{
+  "name": "aftonbladet-links",
+  "version": "0.0.1",
+  "description": "Scrapes all article links from the swedish newspaper Aftonbladet, from their sitemap!",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kladdkaka/aftonbladet-links.git"
+  },
+  "author": "Kladdkaka",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "xml2js": "^0.4.19"
+  }
+}
