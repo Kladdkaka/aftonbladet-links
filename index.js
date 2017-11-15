@@ -13,6 +13,12 @@ const debug = {
 
 const SITEMAP_URL = "https://www.aftonbladet.se/svn/sitemap/index.xml"
 
+/**
+ * Will get all URLs to children sitemaps (one for each month) from parent (main)
+ *
+ * @return {Promise<Array>} The array contains all child sitemap URLs!
+ */
+
 async function getSitemap() {
     let res
 
@@ -39,6 +45,12 @@ async function getSitemap() {
     return urls
 }
 
+/**
+ * Will get all URLs for articles (in code refered as a "link") from children sitemap
+ * @param {string} url The child sitemap URL you want to get article links from :)
+ * @return {Promise<Array>} The array contains all article URLs!
+ */
+
 async function getLinksFromUrl(url) {
     let res
 
@@ -64,6 +76,12 @@ async function getLinksFromUrl(url) {
 
     return links
 }
+
+/**
+ * Will get all URLs for articles (in code refered as a "link") for all articles on the site!
+ * @param {string} [limit=5] How many concurrent requests to use!
+ * @return {Promise<Array>} The array contains all article URLs!
+ */
 
 async function getAll(limit = 5) {
     let urls
