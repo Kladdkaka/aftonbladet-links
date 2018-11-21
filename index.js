@@ -11,7 +11,7 @@ const debug = {
     getall: require('debug')('aftonbladet:getall')
 }
 
-const SITEMAP_URL = "https://www.aftonbladet.se/svn/sitemap/index.xml"
+const SITEMAP_URL = "https://www.aftonbladet.se/sitemap.xml"
 
 /**
  * Will get all URLs to children sitemaps (one for each month) from parent (main)
