@@ -1,10 +1,15 @@
 {
   "name": "aftonbladet-links",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scrapes all article links from the swedish newspaper Aftonbladet, from their sitemap!",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,9 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-things": "^0.2.0",
-    "mocha": "^4.0.1"
+    "husky": "^1.2.0",
+    "mocha": "^4.0.1",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0"
   }
 }

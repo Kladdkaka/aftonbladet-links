@@ -3,15 +3,14 @@ const { promisify } = require('util')
 const parseXML = promisify(require('xml2js').parseString)
 const parallel = require('async-await-parallel')
 const axios = require('axios')
-const zlib = require('zlib')
 
 const debug = {
-    sitemap: require('debug')('aftonbladet:sitemap'),
-    links: require('debug')('aftonbladet:links'),
-    getall: require('debug')('aftonbladet:getall')
+  sitemap: require('debug')('aftonbladet:sitemap'),
+  links: require('debug')('aftonbladet:links'),
+  getall: require('debug')('aftonbladet:getall')
 }
 
-const SITEMAP_URL = "https://www.aftonbladet.se/sitemap.xml"
+const SITEMAP_URL = 'https://www.aftonbladet.se/sitemap.xml'
 
 /**
  * Will get all URLs to children sitemaps (one for each month) from parent (main)
@@ -20,29 +19,35 @@ const SITEMAP_URL = "https://www.aftonbladet.se/sitemap.xml"
  */
 
 async function getSitemap() {
-    let res
+  let res
 
-    debug.sitemap(`Will try to fetch sitemap!`)
+  debug.sitemap(`Will try to fetch sitemap!`)
 
-    try {
-        res = await axios.get(SITEMAP_URL)
-    } catch (error) {
-        debug.sitemap(`Got error while trying to fetch sitemap, error is: "${error.message}"`)
-        throw error
-    }
+  try {
+    res = await axios.get(SITEMAP_URL)
+  } catch (error) {
+    debug.sitemap(
+      `Got error while trying to fetch sitemap, error is: "${error.message}"`
+    )
+    throw error
+  }
 
-    let data
+  let data
 
-    try {
-        data = await parseXML(res.data)
-    } catch (error) {
-        debug.sitemap(`Got error while trying to parse the sitemap, error is: "${error.message}"`)
-        throw error
-    }
+  try {
+    data = await parseXML(res.data)
+  } catch (error) {
+    debug.sitemap(
+      `Got error while trying to parse the sitemap, error is: "${
+        error.message
+      }"`
+    )
+    throw error
+  }
 
-    const urls = data.sitemapindex.sitemap.map(entry => entry.loc[0])
+  const urls = data.sitemapindex.sitemap.map(entry => entry.loc[0])
 
-    return urls
+  return urls
 }
 
 /**
@@ -52,29 +57,35 @@ async function getSitemap() {
  */
 
 async function getLinksFromUrl(url) {
-    let res
+  let res
 
-    debug.links(`Will try to fetch links from: "${url}"`)
+  debug.links(`Will try to fetch links from: "${url}"`)
 
-    try {
-        res = await axios.get(url, { responseType: 'arraybuffer', transformResponse: data => zlib.gunzipSync(data).toString() })
-    } catch (error) {
-        debug.links(`Got error while trying to fetch links from "${url}", error is: "${error.message}"`)
-        throw error
-    }
+  try {
+    res = await axios.get(url)
+  } catch (error) {
+    debug.links(
+      `Got error while trying to fetch links from "${url}", error is: "${
+        error.message
+      }"`
+    )
+    throw error
+  }
 
-    let data
+  let data
 
-    try {
-        data = await parseXML(res.data)
-    } catch (error) {
-        debug.sitemap(`Got error while trying to parse the urls, error is: "${error.message}"`)
-        throw error
-    }
+  try {
+    data = await parseXML(res.data)
+  } catch (error) {
+    debug.sitemap(
+      `Got error while trying to parse the urls, error is: "${error.message}"`
+    )
+    throw error
+  }
 
-    const links = data.urlset.url.map(entry => entry.loc[0])
+  const links = data.urlset.url.map(entry => entry.loc[0])
 
-    return links
+  return links
 }
 
 /**
@@ -84,35 +95,37 @@ async function getLinksFromUrl(url) {
  */
 
 async function getAll(limit = 5) {
-    let urls
+  let urls
 
-    try {
-        urls = await getSitemap()
-    } catch (error) {
-        debug.getall(`Got error while fetching all sitemap urls, error is: "${error.message}"`)
-        throw error
-    }
-
-    const requestFunctions = urls.map(
-        url => async () => getLinksFromUrl(url)
+  try {
+    urls = await getSitemap()
+  } catch (error) {
+    debug.getall(
+      `Got error while fetching all sitemap urls, error is: "${error.message}"`
     )
+    throw error
+  }
 
-    let res
+  const requestFunctions = urls.map(url => async () => getLinksFromUrl(url))
 
-    try {
-        res = await parallel(requestFunctions, 5)
-    } catch (error) {
-        debug.getall(`Got error while trying to get all urls :(, error is: "${error.message}"`)
-        throw error
-    }
+  let res
 
-    const links = [].concat(...res)
+  try {
+    res = await parallel(requestFunctions, 5)
+  } catch (error) {
+    debug.getall(
+      `Got error while trying to get all urls :(, error is: "${error.message}"`
+    )
+    throw error
+  }
 
-    return links
+  const links = [].concat(...res)
+
+  return links
 }
 
 module.exports = {
-    getSitemap,
-    getLinksFromUrl,
-    getAll
+  getSitemap,
+  getLinksFromUrl,
+  getAll
 }

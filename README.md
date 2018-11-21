@@ -1,4 +1,5 @@
 # aftonbladet-links
+
 #### A simple scraper and NPM module to get all article links from Aftonbladet, currently 900k+ articles and counting!
 
 ---
@@ -18,7 +19,7 @@ No support is given for Node versions under v8.0.0!
 # Usage
 
 This should be pretty straight forward, but I included an example that dumps all article links to a json file. :)
-[Click here!](./blob/master/example/get-all-links-and-dump-to-file.js)
+[Click here!](./example/get-all-links-and-dump-to-file.js)
 
 ---
 
@@ -32,9 +33,9 @@ This should be pretty straight forward, but I included an example that dumps all
 
 ## Table of Contents
 
--   [getSitemap](#getsitemap)
--   [getLinksFromUrl](#getlinksfromurl)
--   [getAll](#getall)
+- [getSitemap](#getsitemap)
+- [getLinksFromUrl](#getlinksfromurl)
+- [getAll](#getall)
 
 ## Methods
 
@@ -47,7 +48,8 @@ This should be pretty straight forward, but I included an example that dumps all
 > None :)
 
 **Returns**: **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)>**
->The array contains all child sitemap URLs!
+
+> The array contains all child sitemap URLs!
 
 ### getLinksFromUrl(url)
 
@@ -58,6 +60,7 @@ This should be pretty straight forward, but I included an example that dumps all
 > `url` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The child sitemap URL you want to get article links from :)
 
 **Returns**: **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)>**
+
 > The array contains all article URLs!
 
 ### getAll(limit = 5)
@@ -69,4 +72,5 @@ This should be pretty straight forward, but I included an example that dumps all
 > `limit` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** How many concurrent requests to use! (optional, default `5`)
 
 **Returns**: **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)>**
+
 > The array contains all article URLs!
